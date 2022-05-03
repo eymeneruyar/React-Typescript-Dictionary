@@ -1,5 +1,6 @@
 body{
     background-color: #f2f7fc;
+    font-family: "Poppins", sans-serif;
 }
 
 .subpage_header{
@@ -127,3 +128,48 @@ body{
     backface-visibility: hidden;
 }
 
+.subpage_search_result{
+    display: block;
+    box-shadow: 0px 14px 16px 0px rgb(41 53 108 / 25%);
+    background: #fff;
+    border-radius: 8px;
+    position: absolute !important;
+    top: 99%;
+    width: 100%;
+    z-index: 23;
+    margin-top: 15px;
+    padding: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.95) rotateX(20deg);
+    transform-origin: 50% 0%;
+    transition: all 0.3s;
+}
+
+.subpage_search_result_list{
+    display: block;
+}
+
+.dictionary_header{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.dictionary_header_title{
+    text-align: center;
+    font-size: 35px;
+    font-weight: 800;
+    width: 100%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.dictionary_header_date{
+    display: inline-flex;
+    line-height: 1em;
+    font-size: 16px;
+    font-weight: 600;
+    transform: translateY(-20px);
+}
