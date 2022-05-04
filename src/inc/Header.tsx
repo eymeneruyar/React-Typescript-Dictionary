@@ -19,7 +19,7 @@ export default function Header() {
 
     return (
         <>
-            <Navbar expand = "lg">
+            <Navbar expand = "lg" className='fixed_top'>
                 <Container>
                     <Navbar.Brand href="#home">
                         <img src="../img/logo2.png" width="45" className="d-inline-block align-middle mr-2 "/>
