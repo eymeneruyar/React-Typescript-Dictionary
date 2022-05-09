@@ -4,7 +4,7 @@ import '../app-assets/searchResult.css';
 
 import Header from '../inc/Header'
 import SearchBar from '../inc/SearchBar'
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container, Card, Nav } from 'react-bootstrap';
 import { GiSpeaker } from 'react-icons/gi';
 import { AiOutlinePrinter, AiOutlineShareAlt } from 'react-icons/ai';
 //TODO: Kartlar yazılacak
@@ -39,7 +39,48 @@ export default function SearchResult() {
                     </div>
                 </div>
                 <div className='word_desc'>
-
+                    <Card className='word_desc_box col-6'>
+                        <Card.Header className='word_desc_top'>
+                            find (v)
+                        </Card.Header>
+                        <Card.Body>
+                            <Card.Title className='word_header_title'>bulmak</Card.Title>
+                            <Card.Text className='word_header_text'>
+                                keşfetmek, öğrenmek
+                            </Card.Text>
+                        </Card.Body>
+                        <Card.Footer className='word_footer_section'>
+                            <Nav variant="pills" defaultActiveKey="#first">
+                                <Nav.Item>
+                                    <Nav.Link href="#first">Anlam</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link href="#link">Örnek Cümle</Nav.Link>
+                                </Nav.Item>
+                            </Nav>
+                        </Card.Footer>
+                    </Card>
+                    <Card className='word_desc_box col-6'>
+                        <Card.Header className='word_desc_top noun'>
+                            find (n)
+                        </Card.Header>
+                        <Card.Body>
+                            <Card.Title className='word_header_title'>buluş</Card.Title>
+                            <Card.Text className='word_header_text'>
+                                keşif, buluntu
+                            </Card.Text>
+                        </Card.Body>
+                        <Card.Footer className='word_footer_section'>
+                            <Nav variant="pills" defaultActiveKey="#first">
+                                <Nav.Item>
+                                    <Nav.Link href="#first" className='noun_btn'>Anlam</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link href="#link">Örnek Cümle</Nav.Link>
+                                </Nav.Item>
+                            </Nav>
+                        </Card.Footer>
+                    </Card>
                 </div>
             </Container>
         </div>

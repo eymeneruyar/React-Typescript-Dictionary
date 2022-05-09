@@ -87,3 +87,67 @@ body{
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.word_desc_box{
+    display: block;
+    box-shadow: 0px 7px 16px 2px rgb(41 53 108 / 10%);
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 0;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    max-width: 550px;
+}
+
+.word_desc_top{
+    display: block;
+    padding: 15px;
+    background: #3598e8;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1em;
+}
+
+.noun{
+    background: #8644a1;
+}
+
+.word_header_title {
+    display: block;
+    color: #4545a2;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.word_header_text {
+    display: block;
+    color: #859db2;
+    font-size: 14px;
+}
+
+.word_footer_section{
+    background: #f8fafe;
+    color: #859db2;
+}
+
+.nav-pills .nav-link.active{
+    border-radius: 10px;
+    color: #fff;
+    background-color: #f8fafe;
+}
+
+.noun_btn .nav-link.active{
+    background-color: linear-gradient(to left, #203259 0%, #8644a1 100%);
+}
+
+.verb_btn{
+    background-image: linear-gradient(to left, #203259 0%, #3598e8 100%) !important;
+}
+
+.noun_btn{
+    background-image: linear-gradient(to left, #203259 0%, #8644a1 100%) !important;
+}
