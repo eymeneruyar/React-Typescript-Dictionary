@@ -52,10 +52,10 @@ export default function SearchResult() {
                         <Card.Footer className='word_footer_section'>
                             <Nav variant="pills" defaultActiveKey="#first">
                                 <Nav.Item>
-                                    <Nav.Link href="#first">Anlam</Nav.Link>
+                                    <Nav.Link href="#first" className='verb_btn'>Anlam</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link href="#link">Örnek Cümle</Nav.Link>
+                                    <Nav.Link href="#link" className='verb_btn'>Örnek Cümle</Nav.Link>
                                 </Nav.Item>
                             </Nav>
                         </Card.Footer>
@@ -76,7 +76,7 @@ export default function SearchResult() {
                                     <Nav.Link href="#first" className='noun_btn'>Anlam</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link href="#link">Örnek Cümle</Nav.Link>
+                                    <Nav.Link href="#link" className='noun_btn'>Örnek Cümle</Nav.Link>
                                 </Nav.Item>
                             </Nav>
                         </Card.Footer>
