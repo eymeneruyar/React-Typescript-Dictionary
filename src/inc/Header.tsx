@@ -3,13 +3,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import '../app-assets/header.css';
 
-//Import other parts
-import { useState,useEffect } from 'react'
-import { Navbar,Container,Nav,Form,Button,Modal } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
+//Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser} from '@fortawesome/free-regular-svg-icons';
 import { FaLock, FaEnvelope,FaGithub } from 'react-icons/fa';
+import { FiSettings } from 'react-icons/fi';
+import { MdOutlineExitToApp } from 'react-icons/md';
+
+//Import other parts
+import { useState,useEffect } from 'react'
+import { Navbar,Container,Nav,Form,Button,DropdownButton,Dropdown,Modal } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
 import { User, UserResult } from '../models/Users';
 import { control, encryptData } from '../services/Util';
 import { logout, userAndAdminLogin } from '../services/LogInOutService';
@@ -56,13 +60,13 @@ export default function Header() {
     // url control and menu active
     const urlActive = () => {
         if (loc.pathname === "/") {
-            setActiveItem("Anasayfa")
+            setActiveItem("Ana Sayfa")
         }
-        if (loc.pathname === "/foodsAdd") {
-            setActiveItem("Gıda Ekle")
+        if (loc.pathname === "/resources") {
+            setActiveItem("Yardımcı Kaynaklar")
         }
-        if (loc.pathname === "/foodsList") {
-            setActiveItem("Eklediklerim")
+        if (loc.pathname === "/edit") {
+            setActiveItem("Düzenle")
         }
         if (loc.pathname === "/waitFoodsList") {
             setActiveItem("Bekleyenler")
@@ -108,13 +112,12 @@ export default function Header() {
     const fncLogOut = () => {
         toast.loading("Yükleniyor.")
         logout().then(res => {
-        localStorage.removeItem("user")
-        setIsLogOut(false)
-        setUser(null)
-        setLoginStatus(false)
-        setIsAdmin(false)
-        toast.dismiss();
-        window.location.href = "/"
+            localStorage.removeItem("user")
+            setIsLogOut(false)
+            setUser(null)
+            setLoginStatus(false)
+            setIsAdmin(false)
+            toast.dismiss();
         }).catch(err => {
             toast.dismiss();
             toast.error("Çıkış işlemi sırasında bir hata oluştu!")
@@ -132,14 +135,43 @@ export default function Header() {
                     </Navbar.Brand>
                 
                     <Nav className="me-auto my-2 my-lg-0">
-                        <Nav.Link href="#home">Ana Sayfa</Nav.Link>
-                        <Nav.Link href="#pricing">Yardımcı Kaynaklar</Nav.Link>
-                        <Nav.Link href='#' hidden={false}>Düzenle</Nav.Link>
+                        <Nav.Link href="/" active = {activeItem === 'Ana Sayfa'}>Ana Sayfa</Nav.Link>
+                        <Nav.Link href="/resources" active = {activeItem === 'Yardımcı Kaynaklar'}>Yardımcı Kaynaklar</Nav.Link>
+                        {isAdmin === true &&
+                            <Nav.Link href="#" active = {activeItem === 'Düzenle'}>Düzenle</Nav.Link>
+                        }
+                        
                     </Nav>
-                    <Button className='btn_login' onClick={handleShow}>
-                        <FontAwesomeIcon icon={faCircleUser} style={{marginRight:5}}/>
-                        Giriş Yap
-                    </Button>
+                    {!user &&
+                        <>
+                            <Button className='btn_login' onClick={handleShow}>
+                                <FontAwesomeIcon icon={faCircleUser} style={{marginRight:5}}/>
+                                Giriş Yap
+                            </Button>
+                        </>
+                    }
+                    {user &&
+                        <>
+                            <Dropdown>
+                                <Dropdown.Toggle variant="none" className='btn_login_active' id="dropdown-basic">
+                                    <FontAwesomeIcon icon={faCircleUser} style={{marginRight:5}}/>
+                                    {user.name} {user.surname}
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu>
+                                    <Dropdown.Item href="#/action-1">
+                                        <span><FiSettings size={20} style={{marginRight:5}}/></span>
+                                        Ayarlar
+                                    </Dropdown.Item>
+                                    <Dropdown.Item href="#/action-1" onClick={()=> fncLogOut()}>
+                                        <span><MdOutlineExitToApp size={20} style={{marginRight:5}}/></span>
+                                        Çıkış Yap
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </>
+                    }
+                    
                 </Container>
             </Navbar>
 

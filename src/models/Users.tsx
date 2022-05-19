@@ -8,6 +8,8 @@ export interface UserResult{
     id?: number,
     email?: string,
     password?: string,
+    name?: string,
+    surname?: string,
     enabled?:      boolean,
     tokenExpired?: boolean,
     roles?:        Role[]

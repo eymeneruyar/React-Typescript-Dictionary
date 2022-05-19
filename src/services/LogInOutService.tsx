@@ -27,5 +27,5 @@ export const userAndAdminLogin = ( email:string, password: string ) => {
 
 // user and admin logout
 export const logout = () => {
-    return axiosConfig.get("api/logOut");
+    return axiosConfig.get("api/logout");
 }

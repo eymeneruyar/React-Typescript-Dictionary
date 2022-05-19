@@ -179,3 +179,26 @@ a.nav-link{
     margin-right: 10px;
 }
 
+.btn_login_active{
+    display: inline-flex;
+    align-items: center;
+    /*box-shadow: 0px 15px 35px 0px rgb(35 35 35 / 25%);*/
+    justify-content: center;
+    color: #fff;
+    position: relative;
+    top: 0;
+    backface-visibility: hidden;
+    background: linear-gradient(to left, #203259 0%, #3598e8 100%);
+    transition: all 0.3s;
+    transform: translateY(0px);
+    padding: 10px 30px;
+    border-radius: 7px;
+    min-height: 50px;
+}
+
+a.nav-link.active{
+    background: linear-gradient(to left, #203259 0%, #3598e8 100%);
+    color: white !important;
+    border-radius: 10px;
+}
+
