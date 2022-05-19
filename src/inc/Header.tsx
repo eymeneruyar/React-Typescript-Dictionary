@@ -1,14 +1,19 @@
 //Import CSS Files
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 import '../app-assets/header.css';
+
 //Import other parts
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { Navbar,Container,Nav,Form,Button,Modal } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser} from '@fortawesome/free-regular-svg-icons';
 import { FaLock, FaEnvelope,FaGithub } from 'react-icons/fa';
-import { login } from '../services/AuthService';
-
+import { User, UserResult } from '../models/Users';
+import { control, encryptData } from '../services/Util';
+import { logout, userAndAdminLogin } from '../services/LogInOutService';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 export default function Header() {
@@ -16,21 +21,109 @@ export default function Header() {
     const [show, setShow] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [activeItem, setActiveItem] = useState("Anasayfa");
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const fncLogin = () => {
-        const creds = {
-            username: email,
-            password: password
+    // useNavigate
+    const navigate = useNavigate();
+    const loc = useLocation();
+
+    // login user
+    const [user, setUser] = useState<UserResult | null>()
+
+    // logout
+    const [isLogOut, setIsLogOut] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
+
+    // login status
+    const [loginStatus, setLoginStatus] = useState(false)
+    useEffect(() => {
+        urlActive()
+        const usr = control()
+        console.log(usr)
+        if (usr !== null) {
+            setUser(usr)
+            usr.roles!.forEach(item => {
+                if(item.name === "ROLE_ADMIN"){
+                    setIsAdmin(true);
+                }
+            })
         }
-        login(creds);
-        console.log(creds)
+    }, [loginStatus])
+
+    // url control and menu active
+    const urlActive = () => {
+        if (loc.pathname === "/") {
+            setActiveItem("Anasayfa")
+        }
+        if (loc.pathname === "/foodsAdd") {
+            setActiveItem("Gıda Ekle")
+        }
+        if (loc.pathname === "/foodsList") {
+            setActiveItem("Eklediklerim")
+        }
+        if (loc.pathname === "/waitFoodsList") {
+            setActiveItem("Bekleyenler")
+        }
+    }
+
+    // login fnc
+    let regemail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    const fncLogin = () => {
+
+        console.log("fncLogin tetiklendi!")
+        if (email == '') {
+            toast.warning('Lütfen email alanını doldurunuz!');
+        } else if (regemail.test(email) === false) {
+            toast.warning('Lütfen geçerli bir email giriniz!')
+        } else if (password == '') {
+            toast.warning('Lütfen şifre alanını doldurunuz!');
+        } else {
+            toast.loading("Yükleniyor.")
+            userAndAdminLogin(email, password).then(res => {
+                const usr: User = res.data
+                if (usr.status!) {
+                    const userResult = usr.result!
+                    // key
+                    const key = process.env.REACT_APP_SALT
+                    const cryptString = encryptData(userResult, key!)
+                    const userAutString = encryptData(res.config.headers, key!)
+                    localStorage.setItem("user", cryptString)
+                    localStorage.setItem("aut", userAutString)
+                    setLoginStatus(usr.status!)
+                    //setModalLoginStatus(false)
+                    setShow(false);
+                }
+                toast.dismiss();
+            }).catch(err => {
+                toast.dismiss();
+                toast.error("Bu yetkilerde bir kullanıcı yok!")
+            })
+        }
+    }
+
+    // log out fnc
+    const fncLogOut = () => {
+        toast.loading("Yükleniyor.")
+        logout().then(res => {
+        localStorage.removeItem("user")
+        setIsLogOut(false)
+        setUser(null)
+        setLoginStatus(false)
+        setIsAdmin(false)
+        toast.dismiss();
+        window.location.href = "/"
+        }).catch(err => {
+            toast.dismiss();
+            toast.error("Çıkış işlemi sırasında bir hata oluştu!")
+        })
     }
 
     return (
         <>
+            <ToastContainer />
             <Navbar expand = "lg" className='fixed_top'>
                 <Container>
                     <Navbar.Brand href="#home">
@@ -41,6 +134,7 @@ export default function Header() {
                     <Nav className="me-auto my-2 my-lg-0">
                         <Nav.Link href="#home">Ana Sayfa</Nav.Link>
                         <Nav.Link href="#pricing">Yardımcı Kaynaklar</Nav.Link>
+                        <Nav.Link href='#' hidden={false}>Düzenle</Nav.Link>
                     </Nav>
                     <Button className='btn_login' onClick={handleShow}>
                         <FontAwesomeIcon icon={faCircleUser} style={{marginRight:5}}/>
