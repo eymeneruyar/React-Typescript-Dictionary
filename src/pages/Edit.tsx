@@ -7,7 +7,9 @@ import AddRemoveFormField from '../inc/AddRemoveFormField';
 
 export default function Edit() {
 
-
+    let turkishMeans = AddRemoveFormField("Türkçe Anlamı");
+    let synonyms = AddRemoveFormField("Eş Anlamlısı");
+    let sentences = AddRemoveFormField("Örnek Cümle");
 
     return (
         <div>
@@ -33,35 +35,27 @@ export default function Edit() {
                                     </Form.Select>
                                 </FloatingLabel>
                             </Card.Text>
-                            <AddRemoveFormField/>
-                            <Button variant="primary">Go somewhere</Button>
                         </Card.Body>
                     </Card>
                     <Card className='word_properties_box'>
                         <Card.Body>
                             <Card.Text>
-                            Some quick example text to build on the card title and make up the bulk of
-                            the card's content.
+                                {turkishMeans}
                             </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
                         </Card.Body>
                     </Card>
                     <Card className='word_properties_box'>
                         <Card.Body>
                             <Card.Text>
-                            Some quick example text to build on the card title and make up the bulk of
-                            the card's content.
+                                {synonyms}
                             </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
                         </Card.Body>
                     </Card>
                     <Card className='word_properties_box'>
                         <Card.Body>
                             <Card.Text>
-                            Some quick example text to build on the card title and make up the bulk of
-                            the card's content.
+                                {sentences}
                             </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
                         </Card.Body>
                     </Card>
                 </div>

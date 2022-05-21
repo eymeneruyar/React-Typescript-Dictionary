@@ -23,7 +23,7 @@
     font-weight: 500;
     color: rgb(84, 84, 84);
   }
-  
+  /*
   input {
     height: 35px;
     width: 100%;
@@ -36,7 +36,7 @@
   input:focus {
     border: 1px solid rgb(0, 208, 255);
   }
-  
+  */
   .services {
     display: flex;
     justify-content: space-between;
@@ -44,7 +44,6 @@
   .first-division {
     display: flex;
     flex-direction: column;
-    margin: 0 5px 0.5rem 0;
     width: 100%;
   }
   button {
