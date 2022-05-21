@@ -129,7 +129,7 @@ export default function Header() {
             <ToastContainer />
             <Navbar expand = "lg" className='fixed_top'>
                 <Container>
-                    <Navbar.Brand href="#home">
+                    <Navbar.Brand href="/home">
                         <img src="../img/logo2.png" width="45" className="d-inline-block align-middle mr-2 "/>
                         <span className='navbar_brand_logo'>Dictionary</span>
                     </Navbar.Brand>
@@ -138,7 +138,7 @@ export default function Header() {
                         <Nav.Link href="/" active = {activeItem === 'Ana Sayfa'}>Ana Sayfa</Nav.Link>
                         <Nav.Link href="/resources" active = {activeItem === 'Yardımcı Kaynaklar'}>Yardımcı Kaynaklar</Nav.Link>
                         {isAdmin === true &&
-                            <Nav.Link href="#" active = {activeItem === 'Düzenle'}>Düzenle</Nav.Link>
+                            <Nav.Link href="/edit" active = {activeItem === 'Düzenle'}>Düzenle</Nav.Link>
                         }
                         
                     </Nav>
