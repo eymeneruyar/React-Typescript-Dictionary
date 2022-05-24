@@ -34,7 +34,7 @@ export default function AddRemoveFormField(labelName:string) {
                 {serviceList.map((singleService, index) => (
                     <div key={index} className="services">
                         <div className="first-division">
-                            <FloatingLabel controlId="floatingInput" label = {labelName} className="mb-3">
+                            <FloatingLabel label = {labelName} className="mb-3">
                                 <Form.Control 
                                     placeholder={labelName} 
                                     name="service"

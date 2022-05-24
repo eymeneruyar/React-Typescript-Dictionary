@@ -1,17 +1,29 @@
-import React from 'react'
-import { Container,Card,Nav,Form, FloatingLabel } from 'react-bootstrap'
-import '../app-assets/edit.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//Import Other Library
+import React, {useState} from 'react'
+import { Container,Card,Nav,Form, FloatingLabel, ButtonGroup, Button } from 'react-bootstrap'
 import Header from '../inc/Header'
 import AddRemoveFormField from '../inc/AddRemoveFormField';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { DataTableColumn } from '../models/Words';
 
+//Import CSS Folder
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../app-assets/edit.css';
+
+
 export default function Edit() {
+
+    //Initialize States
+    const [wordName, setWordName] = useState('');
+    const [wordType, setWordType] = useState('');
+    const [wordMean, setWordMean] = useState('');
+    const [wordSynonyms, setWordSynonyms] = useState('');
+    const [wordSentence, setWordSentence] = useState('');
 
     let turkishMeans = AddRemoveFormField("Türkçe Anlamı");
     let synonyms = AddRemoveFormField("Eş Anlamlısı");
     let sentences = AddRemoveFormField("Örnek Cümle");
+    var boxColor = setBoxHeaderColor(wordType);
 
     const columns: TableColumn<DataTableColumn>[] = [
         {
@@ -57,11 +69,11 @@ export default function Edit() {
                     <Card className='word_properties_box'>
                         <Card.Body>
                             <Card.Text>
-                                <FloatingLabel controlId="floatingInput" label="Kelimenin Adı" className="mb-3">
+                                <FloatingLabel label="Kelimenin Adı" className="mb-3">
                                     <Form.Control placeholder="Kelimenin Adı" />
                                 </FloatingLabel>
-                                <FloatingLabel controlId="floatingSelect" label="Kelimenin Türü">
-                                    <Form.Select aria-label="Floating label select example">
+                                <FloatingLabel label="Kelimenin Türü">
+                                    <Form.Select aria-label="Floating label select example" onChange={(e) => setWordType(e.target.value)}>
                                         <option>Lütfen bir seçim yapınız</option>
                                         <option value="v">Verb</option>
                                         <option value="n">Noun</option>
@@ -94,7 +106,7 @@ export default function Edit() {
                         </Card.Body>
                     </Card>
                     <Card className='word_properties_box'>
-                        <Card.Header className='word_desc_top'>
+                        <Card.Header className='word_desc_top' style={{backgroundColor:boxColor}}>
                             find (n)
                         </Card.Header>
                         <Card.Body>
@@ -104,14 +116,22 @@ export default function Edit() {
                             </Card.Text>
                         </Card.Body>
                         <Card.Footer className='word_footer_section'>
-                            <Nav variant="pills" defaultActiveKey="#first">
-                                <Nav.Item>
-                                    <Nav.Link href="#first" className='noun_btn'>Anlam</Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link href="#link" className='noun_btn'>Örnek Cümle</Nav.Link>
-                                </Nav.Item>
-                            </Nav>
+                            <div className='row'>
+                                <Nav variant="pills" defaultActiveKey="#first" className='col-6' style={{justifyContent:'center'}}>
+                                    <Nav.Item>
+                                        <Nav.Link href="#first" className='noun_btn'>Anlam</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link href="#link" className='noun_btn'>Örnek Cümle</Nav.Link>
+                                    </Nav.Item>
+                                </Nav>
+                                <ButtonGroup className='col-3'>
+                                    <Button className='save_btn'>Kaydet</Button>
+                                </ButtonGroup>
+                                <ButtonGroup className='col-3'>
+                                    <Button className='clear_btn'>Temizle</Button>
+                                </ButtonGroup>
+                            </div>
                         </Card.Footer>
                     </Card>
                 </div>
@@ -119,4 +139,19 @@ export default function Edit() {
             </Container>
         </div>
     )
+}
+
+function setBoxHeaderColor(wordType:string){
+    console.log("Renk ayarlama fonksiyonuna girdi." + wordType);
+    var color = '#3598e8';
+    if('v' == wordType){
+        color = '#3598e8';
+    }else if('n' == wordType){
+        color = '#8644a1';
+    }else if('adj' == wordType){
+        color = '#3498e8';
+    }else{
+        color = '#3598e8';
+    }
+    return color;
 }

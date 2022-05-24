@@ -27,3 +27,38 @@ body {
     max-width: 550px;
     min-width: 550px;
 }
+
+.save_btn{
+    display: inline-flex;
+    align-items: center;
+    /*box-shadow: 0px 15px 35px 0px rgb(35 35 35 / 25%);*/
+    justify-content: center;
+    color: #fff;
+    position: relative;
+    top: 0;
+    backface-visibility: hidden;
+    background: linear-gradient(to left, #177220 0%, #114b0d 100%);
+    transition: all 0.3s;
+    transform: translateY(0px);
+    padding: 10px 30px;
+    border-radius: 7px;
+    max-height: 40px;
+    margin-right: 10px;
+}
+
+.clear_btn{
+    display: inline-flex;
+    align-items: center;
+    /*box-shadow: 0px 15px 35px 0px rgb(35 35 35 / 25%);*/
+    justify-content: center;
+    color: #fff;
+    position: relative;
+    top: 0;
+    backface-visibility: hidden;
+    background: linear-gradient(to left, #eab03b 0%, #98810a 100%);
+    transition: all 0.3s;
+    transform: translateY(0px);
+    padding: 10px 30px;
+    border-radius: 7px;
+    max-height: 40px;
+}

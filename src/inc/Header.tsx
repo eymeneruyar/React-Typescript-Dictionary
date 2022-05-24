@@ -129,7 +129,7 @@ export default function Header() {
             <ToastContainer />
             <Navbar expand = "lg" className='fixed_top'>
                 <Container>
-                    <Navbar.Brand href="/home">
+                    <Navbar.Brand href="/">
                         <img src="../img/logo2.png" width="45" className="d-inline-block align-middle mr-2 "/>
                         <span className='navbar_brand_logo'>Dictionary</span>
                     </Navbar.Brand>
