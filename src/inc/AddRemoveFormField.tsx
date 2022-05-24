@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import '../app-assets/addRemoveFormField.css';
 
 //Import Icons
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import { FloatingLabel,Form,Button } from 'react-bootstrap';
+import { RiDeleteBin6Line,RiMenuAddFill } from 'react-icons/ri';
+import { FloatingLabel,Form,Button, ButtonGroup } from 'react-bootstrap';
 
 
 export default function AddRemoveFormField(labelName:string) {
@@ -44,18 +44,20 @@ export default function AddRemoveFormField(labelName:string) {
                                     onChange={(e) => handleServiceChange(e, index)}
                                     required    
                                 />
-                                <div>
+                                <ButtonGroup>
                                     {serviceList.length - 1 === index && serviceList.length < 4 && (
-                                        <Button type="button" onClick={handleServiceAdd} className="add-btn">
-                                            <span>Ekle</span>
+                                        <Button type="button" onClick={handleServiceAdd} className="add_btn">
+                                            <span><RiMenuAddFill size={20} /></span>
                                         </Button>
                                     )}
+                                </ButtonGroup>
+                                <ButtonGroup>
                                     {serviceList.length !== 1 && (
-                                        <Button type="button" onClick={() => handleServiceRemove(index)} className="remove-btn">
-                                            <span><RiDeleteBin6Line size={20} />Sil</span>
+                                        <Button type="button" onClick={() => handleServiceRemove(index)} className="delete_btn">
+                                            <span><RiDeleteBin6Line size={20} /></span>
                                         </Button>
                                     )}
-                                </div>
+                                </ButtonGroup>
                             </FloatingLabel>
                         </div>
                     </div>
