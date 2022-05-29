@@ -1,10 +1,12 @@
 //Import Other Library
 import React, {useState} from 'react'
-import { Container,Card,Nav,Form, FloatingLabel, ButtonGroup, Button } from 'react-bootstrap'
+import { Container,Card,Nav,Form, FloatingLabel, ButtonGroup, Button, Dropdown, DropdownButton } from 'react-bootstrap'
 import Header from '../inc/Header'
 import AddRemoveFormField from '../inc/AddRemoveFormField';
-import DataTable, { TableColumn } from 'react-data-table-component';
+import DataTable, { TableColumn} from 'react-data-table-component';
 import { DataTableColumn } from '../models/Words';
+import { BsFillGrid3X3GapFill } from 'react-icons/bs';
+import { RiDeleteBin6Line,RiEditLine } from 'react-icons/ri';
 
 //Import CSS Folder
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -25,7 +27,16 @@ export default function Edit() {
     let sentences = AddRemoveFormField("Örnek Cümle");
     var boxColor = setBoxHeaderColor(wordType);
 
+    //Data tables Options
     const columns: TableColumn<DataTableColumn>[] = [
+        {
+            cell: () => <BsFillGrid3X3GapFill style={{ fill: '#43a047' }} />,
+            width: '56px', // custom width for icon button
+            style: {
+            	borderBottom: '1px solid #FFFFFF',
+            	marginBottom: '-1px',
+            },
+        },
         {
             name: 'Kelime Türü',
             selector: row => row.wordType,
@@ -46,6 +57,16 @@ export default function Edit() {
             name: 'Örnek Cümle',
             selector: row => row.sentence,
         },
+        {
+            name: 'Düzenle',
+        	cell: () => 
+            <ButtonGroup style={{justifyContent:'space-between'}}>
+                <Button className='dataTable-edit-button'><RiEditLine/></Button>
+                <Button className='dataTable-delete-button'><RiDeleteBin6Line/></Button>
+            </ButtonGroup>,
+        	allowOverflow: true,
+        	button: true,
+        },
     ];
     
     const data = [
@@ -57,6 +78,25 @@ export default function Edit() {
             sentence: 'I am using computer now.'
         }
     ]
+
+    const [filterText, setFilterText] = React.useState('');
+	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
+	const filteredItems = data.filter(
+		item => item.name && item.name.toLowerCase().includes(filterText.toLowerCase()),
+	);
+
+	const subHeaderComponentMemo = React.useMemo(() => {
+		const handleClear = () => {
+			if (filterText) {
+				setResetPaginationToggle(!resetPaginationToggle);
+				setFilterText('');
+			}
+		};
+
+		return (
+			<FilterComponent onFilter={(e:any) => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
+		);
+	}, [filterText, resetPaginationToggle]);
 
     return (
         <div>
@@ -135,8 +175,20 @@ export default function Edit() {
                         </Card.Footer>
                     </Card>
                 </div>
-                <DataTable columns={columns} data={data}/>
+                <DataTable 
+                    columns={columns} 
+                    data={data}
+                    pagination
+                    paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
+                    subHeader
+                    subHeaderComponent={subHeaderComponentMemo}
+                    persistTableHead
+                    customStyles={dataTableCustomStyles}
+                    highlightOnHover
+            		pointerOnHover
+                />
             </Container>
+            <br/>
         </div>
     )
 }
@@ -155,3 +207,47 @@ function setBoxHeaderColor(wordType:string){
     }
     return color;
 }
+
+const FilterComponent = ({ filterText, onFilter, onClear }:any) => (
+	<>
+		<Form.Control
+			id="search"
+			type="text"
+			placeholder="Filter By Name"
+			aria-label="Search Input"
+			value={filterText}
+			onChange={onFilter}
+            className= 'dataTable-search-input'
+		/>
+		<Button type="button" onClick={onClear} className='dataTable-clear-button'>
+			X
+		</Button>
+	</>
+);
+
+const dataTableCustomStyles = {
+	headRow: {
+		style: {
+			border: 'none',
+		},
+	},
+	headCells: {
+		style: {
+			color: '#202124',
+			fontSize: '14px',
+		},
+	},
+	rows: {
+		highlightOnHoverStyle: {
+			backgroundColor: 'rgb(230, 244, 244)',
+			borderBottomColor: '#FFFFFF',
+			borderRadius: '25px',
+			outline: '1px solid #FFFFFF',
+		},
+	},
+	pagination: {
+		style: {
+			border: 'none',
+		},
+	},
+};
