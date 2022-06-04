@@ -5,13 +5,15 @@ import Header from '../inc/Header'
 import AddRemoveFormField from '../inc/AddRemoveFormField';
 import DataTable, { TableColumn} from 'react-data-table-component';
 import { DataTableColumn } from '../models/Words';
+
+//Import Icons
 import { BsFillGrid3X3GapFill } from 'react-icons/bs';
-import { RiDeleteBin6Line,RiEditLine } from 'react-icons/ri';
+import { RiDeleteBin6Line,RiEditLine,RiMenuAddFill } from 'react-icons/ri';
+import { MdOutlineCancel } from 'react-icons/md';
 
 //Import CSS Folder
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../app-assets/edit.css';
-
 
 export default function Edit() {
 
@@ -22,10 +24,60 @@ export default function Edit() {
     const [wordSynonyms, setWordSynonyms] = useState('');
     const [wordSentence, setWordSentence] = useState('');
 
+    //Multiple Input States
+    const [serviceListTurkishMeans, setServiceListTurkishMeans] = useState([{ service: "" }]);
+    const [serviceListSynonyms, setServiceListSynonyms] = useState([{ service: "" }]);
+    const [serviceListSentences, setServiceListSentences] = useState([{ service: "" }]);
+
     let turkishMeans = AddRemoveFormField("Türkçe Anlamı");
     let synonyms = AddRemoveFormField("Eş Anlamlısı");
     let sentences = AddRemoveFormField("Örnek Cümle");
     var boxColor = setBoxHeaderColor(wordType);
+
+    const handleServiceChange = (e:any, index:number,type:string) => {
+        const { name, value } = e.target;
+        if(type == "turkisMeans"){
+            const list = [...serviceListTurkishMeans];
+            list[index].service = value;
+            setServiceListTurkishMeans(list);
+        }else if(type == "synonyms"){
+            const list = [...serviceListSynonyms];
+            list[index].service = value;
+            setServiceListSynonyms(list);
+        }else{
+            const list = [...serviceListSentences];
+            list[index].service = value;
+            setServiceListSentences(list);
+        }
+        
+    };
+
+    const handleServiceRemove = (index:number,type:string) => {
+        if(type == "turkisMeans"){
+            const list = [...serviceListTurkishMeans];
+            list.splice(index, 1);
+            setServiceListTurkishMeans(list);
+        }else if(type == "synonyms"){
+            const list = [...serviceListSynonyms];
+            list.splice(index, 1);
+            setServiceListSynonyms(list);
+        }else{
+            const list = [...serviceListSentences];
+            list.splice(index, 1);
+            setServiceListSentences(list);
+        }
+        
+    };
+
+    const handleServiceAdd = (type:string) => {
+        if(type == "turkisMeans"){
+            setServiceListTurkishMeans([...serviceListTurkishMeans, { service: "" }]);
+        }else if(type == "synonyms"){
+            setServiceListSynonyms([...serviceListSynonyms, { service: "" }]);
+        }else{
+            setServiceListSentences([...serviceListSentences, { service: "" }]);
+        }
+    };
 
     //Data tables Options
     const columns: TableColumn<DataTableColumn>[] = [
@@ -76,7 +128,112 @@ export default function Edit() {
             turkishMean: 'Bilgisayar',
             synonyms: '',
             sentence: 'I am using computer now.'
-        }
+        },
+        {
+            wordType: 'Verb',
+            name: 'Find',
+            turkishMean: 'Bulmak',
+            synonyms: '',
+            sentence: 'I am using computer now.'
+        },
+        {
+            wordType: 'Verb',
+            name: 'attend',
+            turkishMean: 'Katılmak',
+            synonyms: '',
+            sentence: ''
+        },
+        {
+            wordType: 'Adj',
+            name: 'important',
+            turkishMean: 'Önemli',
+            synonyms: '',
+            sentence: ''
+        },
+        {
+            wordType: 'Noun',
+            name: 'Back',
+            turkishMean: 'geri',
+            synonyms: '',
+            sentence: ''
+        },
+        {
+            wordType: 'Pv',
+            name: 'give up',
+            turkishMean: 'pes etmek',
+            synonyms: '',
+            sentence: ''
+        },
+        {
+            wordType: 'Noun',
+            name: 'Bike',
+            turkishMean: 'bisiklet',
+            synonyms: '',
+            sentence: ''
+        },
+        {
+            wordType: 'Noun',
+            name: 'Phone',
+            turkishMean: 'Telefon',
+            synonyms: '',
+            sentence: ''
+        },
+        {
+            wordType: 'Verb',
+            name: 'Call',
+            turkishMean: 'Aramak',
+            synonyms: '',
+            sentence: ''
+        },
+        {
+            wordType: 'Adv',
+            name: 'basically',
+            turkishMean: 'temel olarak',
+            synonyms: '',
+            sentence: ''
+        },
+        {
+            wordType: 'adv',
+            name: 'continuously',
+            turkishMean: 'sürekli olarak',
+            synonyms: '',
+            sentence: ''
+        },
+        {
+            wordType: 'Verb',
+            name: 'give',
+            turkishMean: 'vermek',
+            synonyms: '',
+            sentence: ''
+        },
+        {
+            wordType: 'Verb',
+            name: 'take',
+            turkishMean: 'almak',
+            synonyms: '',
+            sentence: ''
+        },
+        {
+            wordType: 'Noun',
+            name: 'book',
+            turkishMean: 'kitap',
+            synonyms: '',
+            sentence: ''
+        },
+        {
+            wordType: 'Noun',
+            name: 'plane',
+            turkishMean: 'Uçak',
+            synonyms: '',
+            sentence: ''
+        },
+        {
+            wordType: 'Noun',
+            name: 'Computer',
+            turkishMean: 'Bilgisayar',
+            synonyms: '',
+            sentence: ''
+        },
     ]
 
     const [filterText, setFilterText] = React.useState('');
@@ -98,6 +255,8 @@ export default function Edit() {
 		);
 	}, [filterText, resetPaginationToggle]);
 
+    //console.log(serviceListTurkishMeans);
+
     return (
         <div>
             <Header/>
@@ -110,7 +269,7 @@ export default function Edit() {
                         <Card.Body>
                             <Card.Text>
                                 <FloatingLabel label="Kelimenin Adı" className="mb-3">
-                                    <Form.Control placeholder="Kelimenin Adı" />
+                                    <Form.Control placeholder="Kelimenin Adı" onChange={ (e) => setWordName(e.target.value)}/>
                                 </FloatingLabel>
                                 <FloatingLabel label="Kelimenin Türü">
                                     <Form.Select aria-label="Floating label select example" onChange={(e) => setWordType(e.target.value)}>
@@ -127,7 +286,43 @@ export default function Edit() {
                     <Card className='word_properties_box'>
                         <Card.Body>
                             <Card.Text>
-                                {turkishMeans}
+                                <form className="" autoComplete="off">
+                                    <div className="form-field">
+                                        
+                                            {serviceListTurkishMeans.map((singleService, index) => (
+                                                <div key={index} className="services">
+                                                    <div className="first-division">
+                                                        <FloatingLabel label = {"Türkçe Anlamı"} className="mb-3">
+                                                            <Form.Control 
+                                                                placeholder={"Türkçe Anlamı"} 
+                                                                name={"turkisMeans"}
+                                                                type="text"
+                                                                id={"turkisMeans"}
+                                                                value={singleService.service}
+                                                                onChange={(e) => handleServiceChange(e, index,"turkisMeans")}
+                                                                required    
+                                                            />
+                                                            <ButtonGroup>
+                                                                {serviceListTurkishMeans.length - 1 === index && serviceListTurkishMeans.length < 4 && (
+                                                                    <Button type="button" onClick={() => handleServiceAdd("turkisMeans")} className="add_btn">
+                                                                        <span><RiMenuAddFill size={20} /></span>
+                                                                    </Button>
+                                                                )}
+                                                            </ButtonGroup>
+                                                            <ButtonGroup>
+                                                                {serviceListTurkishMeans.length !== 1 && (
+                                                                    <Button type="button" onClick={() => handleServiceRemove(index,"turkisMeans")} className="delete_btn">
+                                                                        <span><RiDeleteBin6Line size={20} /></span>
+                                                                    </Button>
+                                                                )}
+                                                            </ButtonGroup>
+                                                        </FloatingLabel>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        
+                                    </div>
+                                </form>
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -147,7 +342,7 @@ export default function Edit() {
                     </Card>
                     <Card className='word_properties_box'>
                         <Card.Header className='word_desc_top' style={{backgroundColor:boxColor}}>
-                            find (n)
+                            {wordName} ({wordType})
                         </Card.Header>
                         <Card.Body>
                             <Card.Title className='word_header_title'>buluş</Card.Title>
@@ -177,7 +372,7 @@ export default function Edit() {
                 </div>
                 <DataTable 
                     columns={columns} 
-                    data={data}
+                    data={filteredItems}
                     pagination
                     paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
                     subHeader
@@ -194,7 +389,7 @@ export default function Edit() {
 }
 
 function setBoxHeaderColor(wordType:string){
-    console.log("Renk ayarlama fonksiyonuna girdi." + wordType);
+    //console.log("Renk ayarlama fonksiyonuna girdi." + wordType);
     var color = '#3598e8';
     if('v' == wordType){
         color = '#3598e8';
@@ -208,23 +403,25 @@ function setBoxHeaderColor(wordType:string){
     return color;
 }
 
+//Filter for search
 const FilterComponent = ({ filterText, onFilter, onClear }:any) => (
 	<>
 		<Form.Control
 			id="search"
 			type="text"
-			placeholder="Filter By Name"
+			placeholder="Search"
 			aria-label="Search Input"
 			value={filterText}
 			onChange={onFilter}
             className= 'dataTable-search-input'
 		/>
 		<Button type="button" onClick={onClear} className='dataTable-clear-button'>
-			X
+			<span><MdOutlineCancel size={15}/></span>
 		</Button>
 	</>
 );
 
+//Data table custom style
 const dataTableCustomStyles = {
 	headRow: {
 		style: {

@@ -86,6 +86,7 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+    background: linear-gradient(to left, #203259 0%, #3598e8 100%);
 }
 
 .dataTable-delete-button{
