@@ -23,6 +23,9 @@ export default function Edit() {
     const [wordMean, setWordMean] = useState('');
     const [wordSynonyms, setWordSynonyms] = useState('');
     const [wordSentence, setWordSentence] = useState('');
+    const [cardMeanNavStatus, setCardMeanNavStatus] = useState(false);
+    const [cardSynonymsNavStatus, setCardSynonymsNavStatus] = useState(false);
+    const [cardSentencesNavStatus, setCardSentencesNavStatus] = useState(false);
 
     //Multiple Input States
     const [serviceListTurkishMeans, setServiceListTurkishMeans] = useState([{ service: "" }]);
@@ -345,19 +348,42 @@ export default function Edit() {
                             {wordName} ({wordType})
                         </Card.Header>
                         <Card.Body>
-                            <Card.Title className='word_header_title'>buluş</Card.Title>
-                            <Card.Text className='word_header_text'>
-                                keşif, buluntu
-                            </Card.Text>
+                            {cardMeanNavStatus && 
+                                <>
+                                    <Card.Title className='word_header_title'>buluş</Card.Title>
+                                    <Card.Text className='word_header_text'>
+                                    keşif, buluntu
+                                    </Card.Text>
+                                </>
+                            }
+                            {cardSynonymsNavStatus && 
+                                <>
+                                    <Card.Title className='word_header_title'>buluş</Card.Title>
+                                    <Card.Text className='word_header_text'>
+                                    eş anlam
+                                    </Card.Text>
+                                </>
+                            }
+                            {cardSentencesNavStatus && 
+                                <>
+                                    <Card.Title className='word_header_title'>buluş</Card.Title>
+                                    <Card.Text className='word_header_text'>
+                                        cümle
+                                    </Card.Text>
+                                </>
+                            }
                         </Card.Body>
                         <Card.Footer className='word_footer_section'>
                             <div className='row'>
                                 <Nav variant="pills" defaultActiveKey="#first" className='col-6' style={{justifyContent:'center'}}>
                                     <Nav.Item>
-                                        <Nav.Link href="#first" className='noun_btn'>Anlam</Nav.Link>
+                                        <Nav.Link href="#first" onClick={() => {setCardMeanNavStatus(true); setCardSynonymsNavStatus(false); setCardSentencesNavStatus(false)}} className='noun_btn'>Anlam</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link href="#link" className='noun_btn'>Örnek Cümle</Nav.Link>
+                                        <Nav.Link href="#link" onClick={() => {setCardMeanNavStatus(false); setCardSynonymsNavStatus(true); setCardSentencesNavStatus(false)}} className='noun_btn'>Eş Anlam</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link href="#link2" onClick={() => {setCardMeanNavStatus(false); setCardSynonymsNavStatus(false); setCardSentencesNavStatus(true)}} className='noun_btn'>Cümle</Nav.Link>
                                     </Nav.Item>
                                 </Nav>
                                 <ButtonGroup className='col-3'>

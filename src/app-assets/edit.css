@@ -40,10 +40,8 @@ body {
     background: linear-gradient(to left, #177220 0%, #114b0d 100%);
     transition: all 0.3s;
     transform: translateY(0px);
-    padding: 10px 30px;
     border-radius: 7px;
     max-height: 40px;
-    margin-right: 10px;
 }
 
 .clear_btn{
@@ -58,7 +56,6 @@ body {
     background: linear-gradient(to left, #eab03b 0%, #98810a 100%);
     transition: all 0.3s;
     transform: translateY(0px);
-    padding: 10px 30px;
     border-radius: 7px;
     max-height: 40px;
 }
